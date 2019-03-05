@@ -1716,6 +1716,7 @@ public final class MatroskaExtractor implements Extractor {
       int maxInputSize = Format.NO_VALUE;
       @C.PcmEncoding int pcmEncoding = Format.NO_VALUE;
       List<byte[]> initializationData = null;
+      android.util.Log.d(TAG, "initializeOutput: codecId="+codecId);
       switch (codecId) {
         case CODEC_ID_VP8:
           mimeType = MimeTypes.VIDEO_VP8;
