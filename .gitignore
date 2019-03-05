@@ -1,7 +1,7 @@
 # Android generated
 bin
 gen
-libs
+#libs
 obj
 lint.xml
 
@@ -58,7 +58,7 @@ extensions/opus/src/main/jni/libopus
 extensions/flac/src/main/jni/flac
 
 # FFmpeg extension
-extensions/ffmpeg/src/main/jni/ffmpeg
+#extensions/ffmpeg/src/main/jni/ffmpeg
 
 # Cronet extension
 extensions/cronet/jniLibs/*
