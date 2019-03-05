@@ -1311,6 +1311,7 @@ public class SimpleExoPlayer extends BasePlayer
     @Override
     public void onAudioDecoderInitialized(String decoderName, long initializedTimestampMs,
         long initializationDurationMs) {
+      android.util.Log.d(TAG, "onAudioDecoderInitialized: decoderName:"+decoderName);
       for (AudioRendererEventListener audioDebugListener : audioDebugListeners) {
         audioDebugListener.onAudioDecoderInitialized(decoderName, initializedTimestampMs,
             initializationDurationMs);
@@ -1320,6 +1321,7 @@ public class SimpleExoPlayer extends BasePlayer
     @Override
     public void onAudioInputFormatChanged(Format format) {
       audioFormat = format;
+      android.util.Log.d(TAG, "onAudioInputFormatChanged: format:"+format.toString());
       for (AudioRendererEventListener audioDebugListener : audioDebugListeners) {
         audioDebugListener.onAudioInputFormatChanged(format);
       }

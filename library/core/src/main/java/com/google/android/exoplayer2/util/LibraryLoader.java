@@ -15,13 +15,15 @@
  */
 package com.google.android.exoplayer2.util;
 
+import android.util.Log;
+
 /**
  * Configurable loader for native libraries.
  */
 public final class LibraryLoader {
 
   private String[] nativeLibraries;
-  private boolean loadAttempted;
+  private boolean loadAttempted ;
   private boolean isAvailable;
 
   /**
@@ -51,6 +53,7 @@ public final class LibraryLoader {
     try {
       for (String lib : nativeLibraries) {
         System.loadLibrary(lib);
+        Log.d("Kay", "isAvailable: loadLibraries:"+lib);
       }
       isAvailable = true;
     } catch (UnsatisfiedLinkError exception) {

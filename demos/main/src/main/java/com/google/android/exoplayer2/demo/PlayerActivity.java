@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackPreparer;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.audio.AudioCapabilities;
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
@@ -419,16 +421,16 @@ public class PlayerActivity extends Activity
               : DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
               : DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF;
       extensionRendererMode = DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER;
-      DefaultRenderersFactory renderersFactory =
-          new DefaultRenderersFactory(this, extensionRendererMode);
-
+      /*DefaultRenderersFactory renderersFactory =
+          new DefaultRenderersFactory(this, extensionRendererMode);*/
+      MyRenderersFactory myRenderersFactory = new MyRenderersFactory(this, extensionRendererMode);
       trackSelector = new DefaultTrackSelector(trackSelectionFactory);
       trackSelector.setParameters(trackSelectorParameters);
       lastSeenTrackGroupArray = null;
 
       player =
           ExoPlayerFactory.newSimpleInstance(
-              /* context= */ this, renderersFactory, trackSelector, drmSessionManager);
+              /* context= */ this, myRenderersFactory, trackSelector, drmSessionManager);
       player.addListener(new PlayerEventListener());
       player.setPlayWhenReady(startAutoPlay);
       player.addAnalyticsListener(new EventLogger(trackSelector));
@@ -718,6 +720,7 @@ public class PlayerActivity extends Activity
       updateButtonVisibilities();
       if (trackGroups != lastSeenTrackGroupArray) {
         MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        Log.d("Kay", "onTracksChanged: mappedTrackInfo :"+mappedTrackInfo.toString());
         if (mappedTrackInfo != null) {
           if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
               == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
@@ -728,6 +731,7 @@ public class PlayerActivity extends Activity
             showToast(R.string.error_unsupported_audio);
           }
         }
+
         lastSeenTrackGroupArray = trackGroups;
       }
     }
